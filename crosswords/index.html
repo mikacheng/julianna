@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(12, 30px);
+            grid-gap: 2px;
+        }
+        .cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            user-select: none;
+            cursor: pointer;
+            background-color: white;
+        }
+        .cell.selected {
+            background-color: #cce5ff;
+        }
+        #word-list {
+            margin-left: 20px;
+            text-align: left;
+        }
+        #word-list h3 {
+            margin-bottom: 10px;
+        }
+        #word-list ul {
+            padding: 0;
+            list-style: none;
+        }
+        #word-list li {
+            margin: 5px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Word Search</h1>
+    <div id="container">
+        <div id="grid"></div>
+        <div id="word-list">
+            <h3>Find these words:</h3>
+            <ul id="words"></ul>
+        </div>
+    </div>
+    <button onclick="checkSelection()">Check</button>
+    <script>
+        const gridSize = 12;
+        const words = ["chaussettes", "chaussures", "robe", "jupe", "pantalon", "pull", "short", "tshirt", "chemise"];
+        const grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(''));
+        const directions = [
+            { x: 1, y: 0 },  // horizontal right
+            { x: -1, y: 0 }, // horizontal left
+            { x: 0, y: 1 },  // vertical down
+            { x: 0, y: -1 }, // vertical up
+            { x: 1, y: 1 },  // diagonal down-right
+            { x: -1, y: -1 },// diagonal up-left
+            { x: 1, y: -1 }, // diagonal down-left
+            { x: -1, y: 1 }  // diagonal up-right
+        ];
+        let selectedCells = [];
+        const foundWords = new Set();
+
+        function placeWord(word) {
+            let placed = false;
+            const uppercaseWord = word.toUpperCase();
+            while (!placed) {
+                const startX = Math.floor(Math.random() * gridSize);
+                const startY = Math.floor(Math.random() * gridSize);
+                const direction = directions[Math.floor(Math.random() * directions.length)];
+                let x = startX, y = startY;
+
+                if (canPlaceWord(uppercaseWord, x, y, direction)) {
+                    for (let i = 0; i < uppercaseWord.length; i++) {
+                        grid[y][x] = uppercaseWord[i];
+                        x += direction.x;
+                        y += direction.y;
+                    }
+                    placed = true;
+                }
+            }
+        }
+
+        function canPlaceWord(word, x, y, direction) {
+            for (let i = 0; i < word.length; i++) {
+                if (x < 0 || y < 0 || x >= gridSize || y >= gridSize || (grid[y][x] !== '' && grid[y][x] !== word[i])) {
+                    return false;
+                }
+                x += direction.x;
+                y += direction.y;
+            }
+            return true;
+        }
+
+        function fillGrid() {
+            for (let y = 0; y < gridSize; y++) {
+                for (let x = 0; x < gridSize; x++) {
+                    if (grid[y][x] === '') {
+                        grid[y][x] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random uppercase letter
+                    }
+                }
+            }
+        }
+
+        function createGrid() {
+            const gridContainer = document.getElementById('grid');
+            gridContainer.innerHTML = '';
+            for (let y = 0; y < gridSize; y++) {
+                for (let x = 0; x < gridSize; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.textContent = grid[y][x];
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+
+                    cell.addEventListener('mousedown', () => selectCell(cell));
+                    cell.addEventListener('mouseenter', (e) => {
+                        if (e.buttons === 1) selectCell(cell);
+                    });
+
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function populateWordList() {
+            const wordList = document.getElementById('words');
+            wordList.innerHTML = '';
+            words.forEach(word => {
+                const listItem = document.createElement('li');
+                listItem.textContent = word.toUpperCase();
+                wordList.appendChild(listItem);
+            });
+        }
+
+        function selectCell(cell) {
+            if (!cell.classList.contains('selected')) {
+                cell.classList.add('selected');
+                selectedCells.push(cell);
+            }
+        }
+
+        function getSelectedWord() {
+            return selectedCells.map(cell => cell.textContent).join('');
+        }
+
+        function checkSelection() {
+            const selectedWord = getSelectedWord();
+            if (words.map(w => w.toUpperCase()).includes(selectedWord) && !foundWords.has(selectedWord)) {
+                alert(`Correct! You found: ${selectedWord}`);
+                foundWords.add(selectedWord);
+            } else {
+                alert('Incorrect selection or word already found!');
+            }
+            clearSelection();
+        }
+
+        function clearSelection() {
+            selectedCells.forEach(cell => cell.classList.remove('selected'));
+            selectedCells = [];
+        }
+
+        // Main logic
+        words.forEach(word => placeWord(word));
+        fillGrid();
+        createGrid();
+        populateWordList();
+    </script>
+</body>
+</html>

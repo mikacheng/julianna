@@ -1,0 +1,58 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+#crossword {
+  display: grid;
+  grid-template-columns: repeat(12, 30px); /* Adjust size as needed */
+  grid-gap: 2px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 30px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cell[contenteditable="true"] {
+  background-color: #f9f9f9;
+}
+
+.cell.correct {
+  background-color: #c8e6c9; /* Green for correct answers */
+}
+
+.cell.incorrect {
+  background-color: #ffcdd2; /* Red for incorrect answers */
+}
+
+#check-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #64b5f6;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#check-button:hover {
+  background-color: #42a5f5;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}

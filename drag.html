@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Sentence Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>French Sentence Builder</h1>
+    <p>Drag the words into the correct order to form a French sentence!</p>
+    <div class="word-bank">
+        <h2>Word Bank</h2>
+        <div class="draggable-word" draggable="true">Je</div>
+        <div class="draggable-word" draggable="true">tu</div>
+        <div class="draggable-word" draggable="true">il</div>
+        <div class="draggable-word" draggable="true">mange</div>
+        <div class="draggable-word" draggable="true">la</div>
+        <div class="draggable-word" draggable="true">petite</div>
+        <div class="draggable-word" draggable="true">pomme</div>
+    </div>
+
+    <div class="drop-zone">
+        <h2>Construct Your Sentence</h2>
+        <div class="drop-target" data-type="subject">Subject</div>
+        <div class="drop-target" data-type="verb">Verb</div>
+        <div class="drop-target" data-type="article">Article</div>
+        <div class="drop-target" data-type="adjective">Adjective</div>
+        <div class="drop-target" data-type="noun">Noun</div>
+    </div>
+
+    <button id="check-answer">Check Answer</button>
+    <div id="result"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
