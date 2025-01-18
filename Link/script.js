@@ -1,14 +1,14 @@
 const wordPairs = [
-  { english: "Apple", french: "Pomme" },
-  { english: "House", french: "Maison" },
-  { english: "Cat", french: "Chat" },
-  { english: "Flower", french: "Fleur" },
-  { english: "Car", french: "Voiture" },
-  { english: "Tree", french: "Arbre" },
-  { english: "Dog", french: "Chien" },
-  { english: "Water", french: "Eau" },
-  { english: "Book", french: "Livre" },
-  { english: "Chair", french: "Chaise" }
+  { english: "shirt", french: "chemise" },
+  { english: "trousers", french: "pantalon" },
+  { english: "skirt", french: "jupe" },
+  { english: "dress", french: "robe" },
+  { english: "socks", french: "chaussettes" },
+  { english: "pullover", french: "pull" },
+  { english: "shoes", french: "chaussures" },
+  { english: "t-shirt", french: "tee-shirt" },
+  { english: "shorts", french: "short" },
+  { english: "hat", french: "chapeau" }
 ];
 
 let correctMatches = 0;
