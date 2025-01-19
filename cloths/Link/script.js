@@ -4,7 +4,7 @@ const wordPairs = [
   { english: "skirt", french: "jupe" },
   { english: "dress", french: "robe" },
   { english: "socks", french: "chaussettes" },
-  { english: "pullover", french: "pull" },
+  { english: "jumper", french: "pull" },
   { english: "shoes", french: "chaussures" },
   { english: "t-shirt", french: "tee-shirt" },
   { english: "shorts", french: "short" },
