@@ -6,21 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="menu.css">
   <title>Alice French Lessons</title>
-  
+  <style>
+    
+  </style>
 </head>
 <body>
-  <div id="title-name">
-    <h1>French Lessons: les vetements</h1>
+  <!-- Vertical navigation bar -->
+  <div class="navbar">
+    <a onclick="toggleSubnav('clothesSubnav')">Clothes - Les vêtements</a>
+    <div class="subnav" id="clothesSubnav">
+      <a href="cloths/hangman/cHangman.html">Hangman</a>
+      <a href="cloths/memoryGame/index.html">Memory game</a>
+      <a href="cloths/Link/index.html">Link</a>
+      <a href="cloths/pictureWords/index.html">Picture</a>
+    </div>
+    <a onclick="toggleSubnav('foodSubnav')">Food - La nourriture</a>
+    <div class="subnav" id="foodSubnav">
+      <a href="food/hangman/cHangman.html">Hangman</a>
+      <a href="food/memoryGame/index.html">Memory game</a>
+      <a href="food/Link/index.html">Link</a>
+      <a href="food/pictureWords/index.html">Picture</a>
+    </div>
+    <!-- Uncomment these lines if needed -->
+    <!-- <a onclick="toggleSubnav('sentenceBuilderSubnav')">Sentence Builder</a>
+    <div class="subnav" id="sentenceBuilderSubnav">
+      <a href="DragSentence/nav1.html">Nav1</a>
+      <a href="DragSentence/nav2.html">Nav2</a>
+      <a href="DragSentence/nav3.html">Nav3</a>
+    </div> -->
   </div>
-  <div class="grid">
-    <div><a href="hangman/cHangman.html">Hangman</a></div>
-    <div><a href="memoryGame/index.html">Memory Game</a></div>
-    <!-- <div><a href="DragSentence/drag.html">Sentence builder</a></div> -->
-    <div><a href="Link/index.html">Link game</a></div>
-    <div><a href="pictureWords/index.html">Picture words</a></div>
 
-
+  <!-- Page content -->
+  <div class="content">
+    <div id="title-name">
+      <h1>French Lessons: Vocabulary</h1>
+    </div>
+    <div class="grid">
+      <p>Welcome to French lessons! Select a category from the menu to start learning vocabulary.</p>
+    </div>
   </div>
-  
+
+  <script src="script.js"></script>
 </body>
 </html>

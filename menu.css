@@ -1,0 +1,60 @@
+/* Style for the vertical navigation bar */
+.navbar {
+  height: 100vh; /* Full height */
+  width: 200px; /* Fixed width */
+  position: fixed; /* Stick to the left */
+  top: 0;
+  left: 0;
+  background-color: #333; /* Dark background */
+  display: flex;
+  flex-direction: column;
+  padding-top: 150px;
+  overflow-y: auto; /* Enable scrolling if needed */
+}
+
+/* Style for navigation links */
+.navbar a {
+  text-decoration: none;
+  color: white; /* White text */
+  padding: 15px 20px; /* Spacing */
+  display: block; /* Full-width block links */
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+/* Hover effect */
+.navbar a:hover {
+  background-color: #575757;
+}
+
+/* Sub-navigation menu */
+.subnav {
+  display: none; /* Initially hidden */
+  background-color: #444; /* Slightly lighter background for subnav */
+  padding-left: 20px; /* Indent subnav items */
+}
+
+.subnav a {
+  color: #ddd; /* Light gray for subnav items */
+  padding: 10px 20px;
+}
+
+.subnav a:hover {
+  background-color: #555; /* Highlight on hover */
+}
+
+/* Content area style */
+.content {
+  margin-left: 220px; /* Space for the navbar */
+  padding: 20px;
+}
+
+/* Page title styling */
+#title-name h1 {
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+}
