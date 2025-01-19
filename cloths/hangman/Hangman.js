@@ -1,16 +1,3 @@
-var programming_languages = [
-	"chaussettes",
-  "chaussures",
-  "chemise",
-  "jupe",
-  "pantalon",
-  "pull",
-  "robe",
-  "short",
-  "tshirt",
-	
-]
-
 let answer = '';
 let maxWrong = 6;
 let mistakes = 0;
@@ -18,11 +5,25 @@ let guessed = [];
 let wordStatus = null;
 
 function randomWord() {
-  answer = programming_languages[Math.floor(Math.random() * programming_languages.length)];
+  let keys = [
+    "la_chaussette",
+    "la_chaussure",
+    "la_chemise",
+    "la_jupe",
+    "le_pantalon",
+    "le_pull",
+    "la_robe",
+    "le_short",
+    "le_tshirt",
+    
+  ];
+  let randomIndex = Math.floor(Math.random() * keys.length);
+  let hangmanWord = keys[randomIndex];
+  answer = hangmanWord;
 }
 
 function generateButtons() {
-  let buttonsHTML = 'abcdefghijklmnopqrstuvwxyzéèêëçàáâ'.split('').map(letter =>
+  let buttonsHTML = "_'-abcdefghijklmnopqrstuvwxyzéèêçà".split('').map(letter =>
     `
       <button
         class="btn btn-lg btn-primary m-2"
@@ -69,9 +70,11 @@ function checkIfGameLost() {
 }
 
 function guessedWord() {
-  wordStatus = answer.split('').map(letter => (guessed.indexOf(letter) >= 0 ? letter : " _ ")).join('');
+  wordStatus = answer.split('').map(letter => (guessed.indexOf(letter) >= 0 ? letter : " * ")).join('');
+  
 
   document.getElementById('wordSpotlight').innerHTML = wordStatus;
+ 
 }
 
 function updateMistakes() {
@@ -81,12 +84,14 @@ function updateMistakes() {
 function reset() {
   mistakes = 0;
   guessed = [];
+  wordStatus = null;
   document.getElementById('hangmanPic').src = 'images/0.png';
 
   randomWord();
   guessedWord();
   updateMistakes();
   generateButtons();
+  handleGuess("_");
 }
 
 document.getElementById('maxWrong').innerHTML = maxWrong;
@@ -94,3 +99,4 @@ document.getElementById('maxWrong').innerHTML = maxWrong;
 randomWord();
 generateButtons();
 guessedWord();
+handleGuess("_");

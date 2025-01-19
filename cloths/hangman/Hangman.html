@@ -4,28 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+  <script src="Hangman.js" defer></script>
   <!-- Bootstrap 4 CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="wordlist.css">
+  
   <title>Hangman</title>
 </head>
-<body>
-  <div class="navbar">
-    <!-- <a href="../../homepage.html">Home</a> -->
-    <!-- <a href="cMenu.html">Couleur</a> -->
-   
-  </div>
-  <!-- Words list menu -->
-  <!-- <div id="title-name">
-    <div class="maison-child">
-      
-      <h1><img src="../images/jemepresente.bmp" width="60px" alt="Chambre"> Je me présente</h1>
-    </div> -->
+<body style="background-color: white; margin: 0 10% 0 10%">
+<!-- Vertical navigation bar -->
+<div style="font-size: 20px;"><a href="../index.html">Cloth Menu</a></div>
 <div class="container">
   <h1 class="text-center">Hangman</h1>
-  <div class="float-right">Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'></span></div>
-  
   <div class="text-center">
     <img id='hangmanPic' src="images/0.png" alt="">
     <!-- <p>Guess the Programming Language:</p> -->
@@ -34,7 +23,9 @@
     <button class="btn btn-info" onClick="reset()">Reset</button>
   </div> 
 </div>
-
-<script src='cHangman.js'></script>
+<div class="return">
+  <div class="float-right">Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'></span></div>
+</div>
 </body>
+
 </html>
