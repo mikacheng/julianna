@@ -1,15 +1,23 @@
 const wordPairs = [
-  { english: "shirt", french: "chemise" },
-  { english: "trousers", french: "pantalon" },
-  { english: "skirt", french: "jupe" },
-  { english: "dress", french: "robe" },
-  { english: "socks", french: "chaussettes" },
-  { english: "jumper", french: "pull" },
-  { english: "shoes", french: "chaussures" },
-  { english: "t-shirt", french: "tee-shirt" },
-  { english: "shorts", french: "short" },
-  { english: "hat", french: "chapeau" }
-];
+        { english: "chicken", french: "le poulet" },
+        { english: "beef", french: "le boeuf" },
+        { english: "fish", french: "le poisson" },
+        { english: "hamburger", french: "le hamburger" },
+        { english: "carrot", french: "la carotte" },
+        { english: "potato", french: "la pomme de terre" },
+        { english: "peas", french: "les petits pois" },
+        { english: "tomato", french: "la tomate" },
+        { english: "orange", french: "l’orange" },
+        { english: "apple", french: "la pomme" },
+        { english: "banana", french: "la banane" },
+        { english: "strawberry", french: "la fraise" },
+        { english: "cheese", french: "le fromage" },
+        { english: "egg", french: "l’oeuf" },
+        { english: "milk", french: "le lait" },
+        { english: "ice cream", french: "la glace" },
+        { english: "candy", french: "le bonbon" }
+      ];
+      
 
 let correctMatches = 0;
 
