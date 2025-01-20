@@ -63,11 +63,12 @@ const wordPairs = [
   
       // Handle touch support
       wordBox.addEventListener("touchstart", (event) => {
-        event.target.classList.add("dragging");
+        event.preventDefault(); // Prevent scrolling/zooming delay
+        wordBox.classList.add("dragging");
       });
   
-      wordBox.addEventListener("touchend", (event) => {
-        event.target.classList.remove("dragging");
+      wordBox.addEventListener("touchend", () => {
+        wordBox.classList.remove("dragging");
       });
   
       englishColumn.appendChild(wordBox);
