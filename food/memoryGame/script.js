@@ -1,21 +1,22 @@
 const items = [
-  { type: 'image', content: 'images/chemise.jpg', match: 'chemise' },
-  { type: 'image', content: 'images/pantalon.jpg', match: 'pantalon' },
-  { type: 'image', content: 'images/jupe.jpg', match: 'jupe' },
-  { type: 'image', content: 'images/robe.jpg', match: 'robe' },
-  { type: 'image', content: 'images/pull.jpg', match: 'chapeau' },
-  { type: 'image', content: 'images/tshirt.jpg', match: 'manteau' },
-  { type: 'image', content: 'images/chaussettes.jpg', match: 'chaussettes' },
-  { type: 'image', content: 'images/chaussures.jpg', match: 'chaussures' },
-  { type: 'word', content: 'chemise', match: 'chemise' },
-  { type: 'word', content: 'pantalon', match: 'pantalon' },
-  { type: 'word', content: 'jupe', match: 'jupe' },
-  { type: 'word', content: 'robe', match: 'robe' },
-  { type: 'word', content: 'pull', match: 'chapeau' },
-  { type: 'word', content: 'tshirt', match: 'manteau' },
-  { type: 'word', content: 'chaussettes', match: 'chaussettes' },
-  { type: 'word', content: 'chaussures', match: 'chaussures' },
+  { type: 'image', content: 'images/poulet.jpg', match: 'poulet' },
+  { type: 'image', content: 'images/boeuf.jpg', match: 'boeuf' },
+  { type: 'image', content: 'images/fraise.jpg', match: 'fraise' },
+  { type: 'image', content: 'images/glace.jpg', match: 'glace' },
+  { type: 'image', content: 'images/tomate.jpg', match: 'tomate' },
+  { type: 'image', content: 'images/carotte.jpg', match: 'carotte' },
+  { type: 'image', content: 'images/lait.jpg', match: 'lait' },
+  { type: 'image', content: 'images/oeuf.jpg', match: 'oeuf' },
+  { type: 'word', content: 'le poulet', match: 'poulet' },
+  { type: 'word', content: 'le boeuf', match: 'boeuf' },
+  { type: 'word', content: 'la fraise', match: 'fraise' },
+  { type: 'word', content: 'la glace', match: 'glace' },
+  { type: 'word', content: 'la tomate', match: 'tomate' },
+  { type: 'word', content: 'la carotte', match: 'carotte' },
+  { type: 'word', content: 'le lait', match: 'lait' },
+  { type: 'word', content: "l'oeuf", match: 'oeuf' },
 ];
+
 
 // Shuffle items
 const shuffledItems = items.sort(() => Math.random() - 0.5);
