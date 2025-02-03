@@ -1,0 +1,71 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.crossword-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 40px);
+  grid-template-rows: repeat(7, 40px);
+  gap: 2px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.cell[data-word] {
+  background-color: #e3f2fd;
+}
+
+.cell input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.cell input:focus {
+  outline: none;
+  background-color: #bbdefb;
+}
+
+.clues {
+  margin-top: 20px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.clues h2 {
+  margin-bottom: 10px;
+}
+
+.clues ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.clues li {
+  margin-bottom: 5px;
+}
