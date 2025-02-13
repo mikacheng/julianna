@@ -1,60 +1,55 @@
-/* Style for the vertical navigation bar */
-.navbar {
-  height: 100vh; /* Full height */
-  width: 200px; /* Fixed width */
-  position: fixed; /* Stick to the left */
-  top: 0;
-  left: 0;
-  background-color: #333; /* Dark background */
-  display: flex;
-  flex-direction: column;
-  padding-top: 150px;
-  overflow-y: auto; /* Enable scrolling if needed */
-}
-
-/* Style for navigation links */
-.navbar a {
-  text-decoration: none;
-  color: white; /* White text */
-  padding: 15px 20px; /* Spacing */
-  display: block; /* Full-width block links */
-  transition: background-color 0.3s;
-  cursor: pointer;
-}
-
-/* Hover effect */
-.navbar a:hover {
-  background-color: #575757;
-}
-
-/* Sub-navigation menu */
-.subnav {
-  display: none; /* Initially hidden */
-  background-color: #444; /* Slightly lighter background for subnav */
-  padding-left: 20px; /* Indent subnav items */
-}
-
-.subnav a {
-  color: #ddd; /* Light gray for subnav items */
-  padding: 10px 20px;
-}
-
-.subnav a:hover {
-  background-color: #555; /* Highlight on hover */
-}
-
-/* Content area style */
-.content {
-  margin-left: 220px; /* Space for the navbar */
-  padding: 20px;
-}
-
-/* Page title styling */
-#title-name h1 {
-  margin: 0;
-  padding: 20px;
-  background-color: #f4f4f4;
+#title-name {
   text-align: center;
-  font-size: 24px;
-  color: #333;
+  margin-top: 0px;
+  margin-bottom: 8px;
+  font-family: sans-serif;
+  font-size: 2rem;
+  color: black;
+}
+.return {
+  margin-top: 3rem;
+}
+body {
+  background-color: white;
+  margin: 0 15% 0 20%;
+}
+.grid {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-content: center;
+}
+
+div > div {
+  background-color: rgb(200, 170, 30);
+  width: 300px;
+  height: 35px;
+  border: 1px solid orange;
+  margin: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0rem 0rem;
+  text-align: left;
+  font-size: 1.3rem;
+}
+
+div > a {
+  text-decoration: none;
+  margin-left: 25px;
+  color: black;
+}
+/* The navigation menu */
+.navbar {
+  overflow: hidden;
+  background-color: #333; 
+}
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.navbar a:hover, .subnav:hover .subnavbtn {
+  background-color: red;
 }
