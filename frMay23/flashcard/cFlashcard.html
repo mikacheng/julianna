@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash card App</title>
-    <link href="flashcard.css" rel="stylesheet" type="text/css">
-
+    <link rel="stylesheet" href="flashcard.css">
+    <title>Flashcard App</title>
+    
   </head>
-  <body onload="getRandomTerm()">
+  <body>
     <div class="navbar">
-      <!-- <a href="../../homepage.html">Home</a> -->
-      <a href="cMenu.html">Couleur</a>
-  
-      <!-- <a href="#contact">Contact</a> -->
+      <a href="../index.html">GCSE foundation</a>
     </div>
     <h1 class="title-name">Flashcard - Couleur</h1>
+    <div class="language-selector">
+      <select id="languageMode">
+        <option value="englishToFrench">English to French</option>
+        <option value="frenchToEnglish">French to English</option>
+      </select>
+    </div>
     <div class="container">
       <div id="origine">
         <h3 class="term">Term</h3>
@@ -26,11 +29,10 @@
     </div>
     <div class="button">
       <button class="check">Check Definition</button>
-      <button class="next">Next Definition</button>
+      <button class="right">Right</button>
+      <button class="wrong">Wrong</button>
     </div>
-    <!-- <div class="return"><a href="payMenu.html"><img src="../images/arrow.png" style="width:50px; height:50px"></a></div> -->
-    
-    <script src="cFlashcard.js"></script>
 
+    <script src="Flashcard.js"></script>
   </body>
 </html>

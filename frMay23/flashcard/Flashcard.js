@@ -1,45 +1,95 @@
 let term = document.querySelector(".term");
 let definition = document.querySelector('.definition');
 let checkButton = document.querySelector('.check');
-let nextButton = document.querySelector('.next');
+let rightButton = document.querySelector('.right');
+let wrongButton = document.querySelector('.wrong');
+let languageMode = document.getElementById('languageMode');
 
 let words = {
-  socks: "chaussettes",
-  shoes: "chaussures",
-  shirt: "chemise",
-  skirt: "jupe",
-  trousers: "pantalon",
-  sweater: "pull",
-  dress: "robe",
-  shorts: "short",
-  "T-shirt": "tshirt",
- 
-}
- 
-data = Object.entries(words);
-console.log(data);
-console.log(getRandomTerm());
+  open: "ouvert",
+  closed: "fermé",
+  situated: "situé",
+  countrySide: "campagne",
+  ancient: "ancienne",
+  farm: "ferme",
+  traditional: "traditionnelle",
+  starter: "entrée",
+  "main dish": "plat",
+  dessert: "dessert",
+  drink: "boisson",
+  free: "gratuit",
+  fashionable: "a la mode",
+  abroad: "à l'étranger",
+  "to work": "travailler",
+  dish: "repas",
+  homeless: "sans-abris",
+  charity: "oeuvre caritative",
+  lesson: "un cours",
+  "to take care of": "s'occuper de",
+};
 
+let englishToFrench = [];
+let frenchToEnglish = [];
+let currentWords = [];
+let currentTerm = null;
+let currentIndex = 0;
+
+function initializeWordLists() {
+  englishToFrench = Object.entries(words).map(([eng, fr]) => ({
+    term: eng,
+    definition: fr
+  }));
+  frenchToEnglish = Object.entries(words).map(([eng, fr]) => ({
+    term: fr,
+    definition: eng
+  }));
+}
+
+function setCurrentWords() {
+  currentWords = languageMode.value === 'englishToFrench' 
+    ? [...englishToFrench] 
+    : [...frenchToEnglish];
+}
 
 function getRandomTerm() {
-  let topRandomTerm = data[Math.floor(Math.random() * data.length)]
-  term.textContent = topRandomTerm[0];
-  definition.textContent = topRandomTerm[1];
-//   nextButton.addEventListener('click', function() {
-//   console.log('You click the next button');
-// })
+  if (currentWords.length === 0) {
+    term.textContent = "All done! Refresh to restart.";
+    definition.textContent = "";
+    return;
+  }
+  currentIndex = Math.floor(Math.random() * currentWords.length);
+  currentTerm = currentWords[currentIndex];
+  term.textContent = currentTerm.term;
+  definition.textContent = currentTerm.definition;
 }
 
-checkButton.addEventListener('click', function() {
-  definition.style.display = 'block';
-  term.style.display = "none";
-  // definition.style.zIndex = "+1";
-});
+// Initial setup
+initializeWordLists();
+setCurrentWords();
+getRandomTerm();
 
-nextButton.addEventListener('click', function() {
+// Event listeners
+languageMode.addEventListener('change', () => {
+  setCurrentWords();
   getRandomTerm();
   definition.style.display = 'none';
   term.style.display = 'block';
 });
 
+checkButton.addEventListener('click', () => {
+  definition.style.display = 'block';
+  term.style.display = 'none';
+});
 
+rightButton.addEventListener('click', () => {
+  currentWords.splice(currentIndex, 1);
+  getRandomTerm();
+  definition.style.display = 'none';
+  term.style.display = 'block';
+});
+
+wrongButton.addEventListener('click', () => {
+  getRandomTerm();
+  definition.style.display = 'none';
+  term.style.display = 'block';
+});
