@@ -18,7 +18,7 @@ let words = {
   dessert: "dessert",
   drink: "boisson",
   free: "gratuit",
-  fashionable: "a la mode",
+  fashionable: "à la mode",
   abroad: "à l'étranger",
   "to work": "travailler",
   dish: "repas",
