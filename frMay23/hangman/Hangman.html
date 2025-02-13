@@ -3,29 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="Hangman.js" defer></script>
-  <!-- Bootstrap 4 CDN -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  
   <title>Hangman</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <style>
+    .keyboard-btn {
+      font-size: 1.2rem;
+      min-width: 2.5em;
+    }
+    #hangmanPic {
+      max-height: 40vh;
+    }
+      .word-letter {
+      font-size: 2rem;
+      letter-spacing: 0.2rem; /* Reduced spacing between underscores */
+      word-spacing: 1rem; /* Extra spacing for blanks (spaces) */
+}
+  </style>
 </head>
-<body style="background-color: white; margin: 0 10% 0 10%">
-<!-- Vertical navigation bar -->
-<div style="font-size: 20px;"><a href="../index.html">GCSE foundation</a></div>
-<div class="container">
-  <h1 class="text-center">Hangman</h1>
-  <div class="text-center">
-    <img id='hangmanPic' src="images/0.png" alt="">
-    <!-- <p>Guess the Programming Language:</p> -->
-    <p id="wordSpotlight">The word to be guessed goes here</p>
-    <div id="keyboard"></div>
-    <button class="btn btn-info" onClick="reset()">Reset</button>
-  </div> 
-</div>
-<div class="return">
-  <div class="float-right">Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'></span></div>
-</div>
+<body class="bg-light">
+  <div class="container-fluid py-3">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <h1 class="text-center mb-4">Hangman</h1>
+        <div class="text-center">
+          <img id='hangmanPic' src="images/0.png" alt="Hangman progress" class="img-fluid mb-4">
+          <p id="wordSpotlight" class="word-letter"></p>
+          <div id="keyboard" class="d-flex flex-wrap justify-content-center my-4"></div>
+          <button class="btn btn-info" onClick="reset()">Reset</button>
+        </div>
+        <div class="text-right mt-3">
+          Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'>6</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="Hangman.js"></script>
 </body>
-
 </html>

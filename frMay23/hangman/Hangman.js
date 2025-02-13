@@ -5,109 +5,104 @@ let guessed = [];
 let wordStatus = null;
 
 function randomWord() {
-  let keys = [
+  const keys = [
     "ouvert",
     "fermé",
     "situé",
-    "la_campagne",
+    "la campagne",
     "ancien",
-    "la_ferme",
+    "la ferme",
     "traditionnelle",
-    "une_entrée",
-    "un_plat",
-    "le_dessert",
-    "la_boissons",
+    "une entrée",
+    "un plat",
+    "le dessert",
+    "les boissons",
     "gratuit",
-    "la_mode",
-    "un_sans_abris",
-    "une_oeuvre_caritative",
-    "un_cours",
-    "un_poste",
-    "une_poste",
-    "s'occuper_de"
-
-    
+    "la mode",
+    "un sans abri",
+    "une œuvre caritative",
+    "un cours",
+    "un poste",
+    "une poste",
+    "s'occuper de"
   ];
-  let randomIndex = Math.floor(Math.random() * keys.length);
-  let hangmanWord = keys[randomIndex];
-  answer = hangmanWord;
+  answer = keys[Math.floor(Math.random() * keys.length)].toLowerCase();
 }
 
 function generateButtons() {
-  let buttonsHTML = "_'-abcdefghijklmnopqrstuvwxyzéèêçà".split('').map(letter =>
-    `
-      <button
-        class="btn btn-lg btn-primary m-2"
-        id='` + letter + `'
-        onClick="handleGuess('` + letter + `')"
-      >
-        ` + letter + `
-      </button>
-    `).join('');
-
+  const accentedLetters = ['é', 'è', 'ê', 'ç', 'à', 'ù', 'î', 'ô', 'û', 'â', 'œ'];
+  const buttonsHTML = accentedLetters.map(letter => `
+    <button class="btn btn-primary keyboard-btn m-1" 
+            id="${letter}" 
+            onclick="handleGuess('${letter}')">
+      ${letter}
+    </button>
+  `).join('');
   document.getElementById('keyboard').innerHTML = buttonsHTML;
 }
 
 function handleGuess(chosenLetter) {
-  guessed.indexOf(chosenLetter) === -1 ? guessed.push(chosenLetter) : null;
-  document.getElementById(chosenLetter).setAttribute('disabled', true);
+  chosenLetter = chosenLetter.toLowerCase();
+  if (guessed.includes(chosenLetter)) return;
 
-  if (answer.indexOf(chosenLetter) >= 0) {
-    guessedWord();
-    checkIfGameWon();
-  } else if (answer.indexOf(chosenLetter) === -1) {
+  guessed.push(chosenLetter);
+  document.getElementById(chosenLetter)?.setAttribute('disabled', true);
+
+  if (!answer.includes(chosenLetter)) {
     mistakes++;
     updateMistakes();
-    checkIfGameLost();
     updateHangmanPicture();
   }
-}
-
-function updateHangmanPicture() {
-  document.getElementById('hangmanPic').src = 'images/' + mistakes + '.png';
-}
-
-function checkIfGameWon() {
-  if (wordStatus === answer) {
-    document.getElementById('keyboard').innerHTML = 'You Won!!!';
-  }
-}
-
-function checkIfGameLost() {
-  if (mistakes === maxWrong) {
-    document.getElementById('wordSpotlight').innerHTML = 'The answer was: ' + answer;
-    document.getElementById('keyboard').innerHTML = 'You Lost!!!';
-  }
+  guessedWord();
+  checkGameOver();
 }
 
 function guessedWord() {
-  wordStatus = answer.split('').map(letter => (guessed.indexOf(letter) >= 0 ? letter : " * ")).join('');
-  
+  wordStatus = answer.split('').map(letter => {
+    if (letter === ' ') return '   '; // Add extra spacing for blanks
+    if (letter === "'") return "'"; // Keep apostrophes as is
+    return guessed.includes(letter) ? letter : "_"; // Replace * with _
+  }).join('');
 
-  document.getElementById('wordSpotlight').innerHTML = wordStatus;
- 
+  document.getElementById('wordSpotlight').textContent = wordStatus;
+}
+
+function checkGameOver() {
+  if (!wordStatus.includes('_')) {
+    document.getElementById('keyboard').innerHTML = '<div class="alert alert-success">You Won!</div>';
+  } else if (mistakes >= maxWrong) {
+    document.getElementById('wordSpotlight').textContent = answer;
+    document.getElementById('keyboard').innerHTML = '<div class="alert alert-danger">Game Over!</div>';
+  }
+}
+
+// Add keyboard input for regular letters
+document.addEventListener('keydown', (e) => {
+  if (/^[a-z]$/i.test(e.key)) {
+    handleGuess(e.key.toLowerCase());
+  }
+});
+
+// Existing helper functions remain similar, just update their DOM references
+function updateHangmanPicture() {
+  document.getElementById('hangmanPic').src = `images/${mistakes}.png`;
 }
 
 function updateMistakes() {
-  document.getElementById('mistakes').innerHTML = mistakes;
+  document.getElementById('mistakes').textContent = mistakes;
 }
 
 function reset() {
   mistakes = 0;
   guessed = [];
-  wordStatus = null;
   document.getElementById('hangmanPic').src = 'images/0.png';
-
   randomWord();
   guessedWord();
   updateMistakes();
   generateButtons();
-  handleGuess("_");
 }
 
-document.getElementById('maxWrong').innerHTML = maxWrong;
-
+// Initialize game
 randomWord();
 generateButtons();
 guessedWord();
-handleGuess("_");
