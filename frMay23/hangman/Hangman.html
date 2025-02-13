@@ -13,15 +13,18 @@
     #hangmanPic {
       max-height: 40vh;
     }
-      .word-letter {
+    .word-letter {
       font-size: 2rem;
       letter-spacing: 0.2rem; /* Reduced spacing between underscores */
       word-spacing: 1rem; /* Extra spacing for blanks (spaces) */
-}
+    }
+    #mobileInput {
+      position: absolute;
+      top: -1000px; /* Move it off-screen */
+    }
   </style>
 </head>
 <body class="bg-light">
-  <h1 class="title-name">reading May22</h1>
   <div class="container-fluid py-3">
     <div class="row justify-content-center">
       <div class="col-lg-6 col-md-8">
@@ -29,6 +32,8 @@
         <div class="text-center">
           <img id='hangmanPic' src="images/0.png" alt="Hangman progress" class="img-fluid mb-4">
           <p id="wordSpotlight" class="word-letter"></p>
+          <!-- Hidden input for mobile keyboard -->
+          <input type="text" id="mobileInput" style="opacity: 0; height: 0; width: 0;">
           <div id="keyboard" class="d-flex flex-wrap justify-content-center my-4"></div>
           <button class="btn btn-info" onClick="reset()">Reset</button>
         </div>
