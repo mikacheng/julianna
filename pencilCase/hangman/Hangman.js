@@ -1,101 +1,114 @@
 let answer = '';
-let maxWrong = 6;
-let mistakes = 0;
-let guessed = [];
-let wordStatus = null;
+    let maxWrong = 6;
+    let mistakes = 0;
+    let guessed = [];
+    let wordStatus = null;
 
-function randomWord() {
-  let keys = [
-      "le_stylo",
-      "le_crayon",
-      "le_livre",
-      "la_gomme",
-      "la_règle",
-      "le_taille_crayon",
-      "la_classe",
-      "la_trousse",
-    
-  ];
-  let randomIndex = Math.floor(Math.random() * keys.length);
-  let hangmanWord = keys[randomIndex];
-  answer = hangmanWord;
-}
+    function randomWord() {
+      const keys = [
+        "le_crayon",
+        "le_livre",
+        "la_gomme",
+        "la_règle",
+        "le_taille_crayon",
+        "la_classe",
+        "la_trousse",
+      ];
+      answer = keys[Math.floor(Math.random() * keys.length)].toLowerCase();
+    }
 
-function generateButtons() {
-  let buttonsHTML = "_'-abcdefghijklmnopqrstuvwxyzéèêçà".split('').map(letter =>
-    `
-      <button
-        class="btn btn-lg btn-primary m-2"
-        id='` + letter + `'
-        onClick="handleGuess('` + letter + `')"
-      >
-        ` + letter + `
-      </button>
-    `).join('');
+    function generateButtons() {
+      const accentedLetters = ['é', 'è', 'ê', 'ç', 'à', 'ù', 'î', 'ô', 'û', 'â', 'œ'];
+      const buttonsHTML = accentedLetters.map(letter => `
+        <button class="btn btn-primary keyboard-btn m-1" 
+                id="${letter}" 
+                onclick="handleGuess('${letter}')">
+          ${letter}
+        </button>
+      `).join('');
+      document.getElementById('keyboard').innerHTML = buttonsHTML;
+    }
 
-  document.getElementById('keyboard').innerHTML = buttonsHTML;
-}
+    function handleGuess(chosenLetter) {
+      chosenLetter = chosenLetter.toLowerCase();
+      if (guessed.includes(chosenLetter)) return;
 
-function handleGuess(chosenLetter) {
-  guessed.indexOf(chosenLetter) === -1 ? guessed.push(chosenLetter) : null;
-  document.getElementById(chosenLetter).setAttribute('disabled', true);
+      guessed.push(chosenLetter);
+      document.getElementById(chosenLetter)?.setAttribute('disabled', true);
 
-  if (answer.indexOf(chosenLetter) >= 0) {
+      if (!answer.includes(chosenLetter)) {
+        mistakes++;
+        updateMistakes();
+        updateHangmanPicture();
+      }
+      guessedWord();
+      checkGameOver();
+    }
+
+    function guessedWord() {
+      wordStatus = answer.split('').map(letter => {
+        if (letter === ' ') return '   '; // Add extra spacing for blanks
+        if (letter === "'") return "'"; // Keep apostrophes as is
+        return guessed.includes(letter) ? letter : "_"; // Replace * with _
+      }).join('');
+
+      document.getElementById('wordSpotlight').textContent = wordStatus;
+    }
+
+    function checkGameOver() {
+      if (!wordStatus.includes('_')) {
+        document.getElementById('keyboard').innerHTML = '<div class="alert alert-success">You Won!</div>';
+      } else if (mistakes >= maxWrong) {
+        document.getElementById('wordSpotlight').textContent = answer;
+        document.getElementById('keyboard').innerHTML = '<div class="alert alert-danger">Game Over!</div>';
+      }
+    }
+
+    // Add keyboard input for regular letters
+    document.addEventListener('keydown', (e) => {
+      if (/^[a-z]$/i.test(e.key)) {
+        handleGuess(e.key.toLowerCase());
+      }
+    });
+
+    // Focus the hidden input when the game area is clicked
+    document.addEventListener('click', () => {
+      document.getElementById('mobileInput').focus();
+    });
+
+    // Capture input from the hidden input field
+    document.getElementById('mobileInput').addEventListener('input', (e) => {
+      const input = e.target.value.toLowerCase();
+      if (/^[a-z]$/.test(input)) {
+        handleGuess(input);
+      }
+      e.target.value = ''; // Clear the input after processing
+    });
+
+    // Prevent the hidden input from showing suggestions or autocorrect
+    document.getElementById('mobileInput').setAttribute('autocomplete', 'off');
+    document.getElementById('mobileInput').setAttribute('autocorrect', 'off');
+    document.getElementById('mobileInput').setAttribute('spellcheck', 'false');
+
+    function updateHangmanPicture() {
+      document.getElementById('hangmanPic').src = `images/${mistakes}.png`;
+    }
+
+    function updateMistakes() {
+      document.getElementById('mistakes').textContent = mistakes;
+    }
+
+    function reset() {
+      mistakes = 0;
+      guessed = [];
+      document.getElementById('hangmanPic').src = 'images/0.png';
+      randomWord();
+      guessedWord();
+      updateMistakes();
+      generateButtons();
+    }
+
+    // Initialize game
+    randomWord();
+    generateButtons();
     guessedWord();
-    checkIfGameWon();
-  } else if (answer.indexOf(chosenLetter) === -1) {
-    mistakes++;
-    updateMistakes();
-    checkIfGameLost();
-    updateHangmanPicture();
-  }
-}
-
-function updateHangmanPicture() {
-  document.getElementById('hangmanPic').src = 'images/' + mistakes + '.png';
-}
-
-function checkIfGameWon() {
-  if (wordStatus === answer) {
-    document.getElementById('keyboard').innerHTML = 'You Won!!!';
-  }
-}
-
-function checkIfGameLost() {
-  if (mistakes === maxWrong) {
-    document.getElementById('wordSpotlight').innerHTML = 'The answer was: ' + answer;
-    document.getElementById('keyboard').innerHTML = 'You Lost!!!';
-  }
-}
-
-function guessedWord() {
-  wordStatus = answer.split('').map(letter => (guessed.indexOf(letter) >= 0 ? letter : " * ")).join('');
-  
-
-  document.getElementById('wordSpotlight').innerHTML = wordStatus;
- 
-}
-
-function updateMistakes() {
-  document.getElementById('mistakes').innerHTML = mistakes;
-}
-
-function reset() {
-  mistakes = 0;
-  guessed = [];
-  wordStatus = null;
-  document.getElementById('hangmanPic').src = 'images/0.png';
-
-  randomWord();
-  guessedWord();
-  updateMistakes();
-  generateButtons();
-  handleGuess("_");
-}
-
-document.getElementById('maxWrong').innerHTML = maxWrong;
-
-randomWord();
-generateButtons();
-guessedWord();
-handleGuess("_");
