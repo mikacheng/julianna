@@ -22,12 +22,68 @@
       position: absolute;
       top: -1000px; /* Move it off-screen */
     }
+    /* Style for the top navigation bar */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #f8f9fa;
+      padding: 10px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .navbar .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .navbar .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+    .navbar .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .navbar .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+    .navbar .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .navbar .dropbtn {
+      background-color: transparent;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    /* Add margin to the main content to avoid overlap with the navbar */
+    .container-fluid {
+      margin-top: 60px;
+    }
   </style>
 </head>
 <body class="bg-light">
+  <!-- Top navigation bar with dropdown menu -->
   <div class="navbar">
-    <a href="../../index.html">GCSE foundation</a>
+    <div class="dropdown">
+      <button class="dropbtn">Select Category ▼</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="selectCategory('food')">Food</a>
+        <a href="#" onclick="selectCategory('clothes')">Clothes</a>
+        <a href="#" onclick="selectCategory('animals')">Animals</a>
+        <a href="#" onclick="selectCategory('countries')">Countries</a>
+        <!-- Add more categories as needed -->
+      </div>
+    </div>
   </div>
+
   <div class="container-fluid py-3">
     <div class="row justify-content-center">
       <div class="col-lg-6 col-md-8">
