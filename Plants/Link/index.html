@@ -21,7 +21,8 @@
     <div id="result"></div>
     <button id="reset-button">Play again</button>
     <script>
-        const wordPairs = [{english: 'fun', french: 'amusant'},
+        const wordPairs = [
+        {english: 'fun', french: 'amusant'},
     {english: 'interesting', french: 'intéressant'},
     {english: 'relaxing', french: 'relaxant'},
     {english: 'fantastic', french: 'fantastique'},
@@ -75,7 +76,8 @@
     {english: '(to) like, love', french: 'aimer'},
     {english: '(to) prefer', french: 'préférer'},
     {english: '(to) hate, detest', french: 'détester'},
-    {english: '(to) be', french: 'être'},]; // Keep the existing word pairs
+    {english: '(to) be', french: 'être'}
+        ];
 
         let correctMatches = 0;
         let draggedElement = null;
@@ -112,16 +114,16 @@
                 wordBox.addEventListener("dragstart", (event) => {
                     draggedElement = event.target;
                 });
-                
+
                 wordBox.addEventListener("touchstart", (event) => {
                     draggedElement = event.target;
                     event.target.classList.add("dragging");
                 });
-                
+
                 wordBox.addEventListener("touchend", () => {
                     draggedElement.classList.remove("dragging");
                 });
-                
+
                 englishColumn.appendChild(wordBox);
             });
 
@@ -134,12 +136,12 @@
                 wordBox.addEventListener("dragover", (event) => {
                     event.preventDefault();
                 });
-                
+
                 wordBox.addEventListener("drop", (event) => {
                     event.preventDefault();
                     handleDrop(event, wordBox);
                 });
-                
+
                 wordBox.addEventListener("touchmove", (event) => {
                     event.preventDefault();
                     const touch = event.touches[0];
