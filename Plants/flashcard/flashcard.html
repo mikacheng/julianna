@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>French Flashcards</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="language-selection">
+        <h2>Choose Starting Language</h2>
+        <select id="language-select">
+            <option value="french">French</option>
+            <option value="english">English</option>
+        </select>
+        <button id="start-btn" class="btn">Start</button>
+    </div>
+    <div class="container hidden">
+        <div id="flashcard">
+            <div class="card-inner">
+                <div class="front">
+                    <h1 id="front-text"></h1>
+                </div>
+                <div class="back">
+                    <h1 id="back-text"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="check-btn" class="btn">Check</button>
+            <div id="result-buttons" class="hidden">
+                <button id="correct" class="btn success">Correct 👍</button>
+                <button id="wrong" class="btn danger">Incorrect 👎</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
