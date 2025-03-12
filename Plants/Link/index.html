@@ -4,7 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Matching Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* styles.css content */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .game-container {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-bottom: 20px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .column h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .word-box {
+            background-color: #e3f2fd;
+            border: 1px solid #90caf9;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+        }
+
+        .word-box.droppable {
+            background-color: #f5f5f5;
+            border: 2px dashed #90caf9;
+            cursor: pointer;
+        }
+
+        .word-box.correct {
+            background-color: #c8e6c9;
+            border-color: #66bb6a;
+        }
+
+        .word-box.incorrect {
+            background-color: #ffcdd2;
+            border-color: #e57373;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div style="font-size: 20px;"><a href="../index.html">Cloth Menu</a></div>
@@ -20,7 +88,9 @@
     </div>
     <div id="result"></div>
     <button id="reset-button">Play again</button>
+
     <script>
+        // script.js content
         const wordPairs = [
         {english: 'fun', french: 'amusant'},
     {english: 'interesting', french: 'intéressant'},
@@ -76,11 +146,13 @@
     {english: '(to) like, love', french: 'aimer'},
     {english: '(to) prefer', french: 'préférer'},
     {english: '(to) hate, detest', french: 'détester'},
-    {english: '(to) be', french: 'être'}
+    {english: '(to) be', french: 'être'},
         ];
 
         let correctMatches = 0;
-        let draggedElement = null;
+        let selectedPairs = [];
+        let touchClone = null;
+        let currentTouchWord = null;
 
         function shuffleArray(array) {
             return array.sort(() => Math.random() - 0.5);
@@ -88,6 +160,28 @@
 
         function selectRandomPairs(pairs, count) {
             return shuffleArray([...pairs]).slice(0, count);
+        }
+
+        function handleDrop(targetElement, englishWord) {
+            if (targetElement.dataset.word === englishWord) {
+                targetElement.classList.add("correct");
+                targetElement.classList.remove("droppable");
+                targetElement.textContent += ` (${englishWord})`;
+
+                document.querySelectorAll("#english-column .word-box").forEach(word => {
+                    if (word.dataset.word === englishWord) word.remove();
+                });
+
+                correctMatches++;
+                
+                if (correctMatches === selectedPairs.length) {
+                    document.getElementById("result").textContent = "Correct! 🎉 Well done!";
+                    document.getElementById("result").style.color = "green";
+                }
+            } else {
+                targetElement.classList.add("incorrect");
+                setTimeout(() => targetElement.classList.remove("incorrect"), 1000);
+            }
         }
 
         function initializeGame() {
@@ -100,134 +194,81 @@
             result.textContent = "";
             correctMatches = 0;
 
-            const selectedPairs = selectRandomPairs(wordPairs, 5);
+            selectedPairs = selectRandomPairs(wordPairs, 5);
             const shuffledEnglish = shuffleArray([...selectedPairs]);
             const shuffledFrench = shuffleArray([...selectedPairs]);
 
+            // English words
             shuffledEnglish.forEach(pair => {
                 const wordBox = document.createElement("div");
                 wordBox.textContent = pair.english;
-                wordBox.classList.add("word-box");
+                wordBox.className = "word-box";
                 wordBox.draggable = true;
                 wordBox.dataset.word = pair.english;
-                
-                wordBox.addEventListener("dragstart", (event) => {
-                    draggedElement = event.target;
+
+                // Desktop events
+                wordBox.addEventListener("dragstart", e => {
+                    e.dataTransfer.setData("text", e.target.dataset.word);
                 });
 
-                wordBox.addEventListener("touchstart", (event) => {
-                    draggedElement = event.target;
-                    event.target.classList.add("dragging");
-                });
-
-                wordBox.addEventListener("touchend", () => {
-                    draggedElement.classList.remove("dragging");
+                // Mobile events
+                wordBox.addEventListener("touchstart", e => {
+                    e.preventDefault();
+                    currentTouchWord = pair.english;
+                    touchClone = wordBox.cloneNode(true);
+                    touchClone.style.position = "fixed";
+                    touchClone.style.left = `${e.touches[0].clientX}px`;
+                    touchClone.style.top = `${e.touches[0].clientY}px`;
+                    touchClone.style.zIndex = "1000";
+                    touchClone.style.pointerEvents = "none";
+                    document.body.appendChild(touchClone);
                 });
 
                 englishColumn.appendChild(wordBox);
             });
 
+            // French words
             shuffledFrench.forEach(pair => {
                 const wordBox = document.createElement("div");
                 wordBox.textContent = pair.french;
-                wordBox.classList.add("word-box", "droppable");
+                wordBox.className = "word-box droppable";
                 wordBox.dataset.word = pair.english;
 
-                wordBox.addEventListener("dragover", (event) => {
-                    event.preventDefault();
-                });
-
-                wordBox.addEventListener("drop", (event) => {
-                    event.preventDefault();
-                    handleDrop(event, wordBox);
-                });
-
-                wordBox.addEventListener("touchmove", (event) => {
-                    event.preventDefault();
-                    const touch = event.touches[0];
-                    const element = document.elementFromPoint(touch.clientX, touch.clientY);
-                    if (element && element.classList.contains("droppable")) {
-                        handleDrop(event, element);
-                    }
+                wordBox.addEventListener("dragover", e => e.preventDefault());
+                wordBox.addEventListener("drop", e => {
+                    e.preventDefault();
+                    handleDrop(wordBox, e.dataTransfer.getData("text"));
                 });
 
                 frenchColumn.appendChild(wordBox);
             });
-        }
 
-        function handleDrop(event, target) {
-            if (!draggedElement) return;
-            const droppedWord = draggedElement.dataset.word;
+            // Mobile touch handling
+            document.addEventListener("touchmove", e => {
+                if (touchClone && e.touches[0]) {
+                    touchClone.style.left = `${e.touches[0].clientX}px`;
+                    touchClone.style.top = `${e.touches[0].clientY}px`;
+                }
+            });
 
-            if (droppedWord === target.dataset.word) {
-                target.classList.add("correct");
-                target.classList.remove("droppable");
-                target.textContent += ` (${droppedWord})`;
-                draggedElement.remove();
-                correctMatches++;
-            } else {
-                target.classList.add("incorrect");
-                setTimeout(() => target.classList.remove("incorrect"), 1000);
-            }
+            document.addEventListener("touchend", e => {
+                if (touchClone) {
+                    const touch = e.changedTouches[0];
+                    const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+                    
+                    if (targetElement && targetElement.classList.contains("droppable")) {
+                        handleDrop(targetElement, currentTouchWord);
+                    }
 
-            if (correctMatches === 5) {
-                document.getElementById("result").textContent = "Correct! 🎉 Well done!";
-            }
+                    touchClone.remove();
+                    touchClone = null;
+                    currentTouchWord = null;
+                }
+            });
         }
 
         document.getElementById("reset-button").addEventListener("click", initializeGame);
         initializeGame();
     </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .game-container {
-            display: flex;
-            justify-content: center;
-            gap: 100px;
-            margin-bottom: 20px;
-        }
-
-        .column {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .word-box {
-            background-color: #e3f2fd;
-            border: 1px solid #90caf9;
-            padding: 10px 15px;
-            border-radius: 5px;
-            text-align: center;
-            cursor: grab;
-        }
-
-        .word-box.droppable {
-            background-color: #f5f5f5;
-            border: 2px dashed #90caf9;
-            cursor: pointer;
-        }
-
-        .word-box.correct {
-            background-color: #c8e6c9;
-            border-color: #66bb6a;
-        }
-
-        .word-box.incorrect {
-            background-color: #ffcdd2;
-            border-color: #e57373;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
 </body>
 </html>
